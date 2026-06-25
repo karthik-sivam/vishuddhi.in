@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stoqly — Inventory Management for Small Businesses</title>
+  <meta name="description" content="Stoqly is a smart inventory management app for small businesses. Track stock, scan barcodes, sync across devices, and manage your team — all from your iPhone." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --teal:        #0D9488;
+      --teal-light:  #14b8a6;
+      --teal-dim:    rgba(13,148,136,0.12);
+      --navy:        #08192C;
+      --navy2:       #07302A;
+      --gold:        #C87400;
+      --bg:          #f2f2f7;
+      --card:        #ffffff;
+      --text:        #1c1c1e;
+      --secondary:   #6b7280;
+      --border:      #e5e5ea;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    a { color: var(--teal); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Nav ─────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      padding: 0 24px;
+    }
+
+    .nav-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-logo {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.3px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-logo .logo-dot {
+      width: 26px;
+      height: 26px;
+      border-radius: 7px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .nav-logo .logo-dot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--secondary);
+    }
+
+    .nav-links a:hover { color: var(--teal); text-decoration: none; }
+
+    .nav-cta {
+      background: var(--teal);
+      color: #fff !important;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+    }
+
+    .nav-cta:hover { background: var(--teal-light); text-decoration: none !important; }
+
+    /* ── Hero ────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, #0a2a22 55%, var(--navy2) 100%);
+      padding: 88px 24px 72px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 65% 35%, rgba(13,148,136,0.25) 0%, transparent 55%),
+        radial-gradient(ellipse at 30% 75%, rgba(200,116,0,0.15) 0%, transparent 45%);
+    }
+
+    .hero-inner {
+      position: relative;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .hero-icon {
+      width: 96px;
+      height: 96px;
+      border-radius: 22px;
+      overflow: hidden;
+      display: inline-block;
+      margin-bottom: 28px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    }
+
+    .hero-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--teal-light);
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-size: clamp(34px, 6vw, 52px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      color: #fff;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(90deg, var(--teal-light), var(--gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 17px;
+      color: rgba(255,255,255,0.62);
+      max-width: 460px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--teal);
+      color: #fff;
+      padding: 13px 24px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 15px;
+      transition: background .2s;
+    }
+
+    .btn-primary:hover { background: var(--teal-light); text-decoration: none; }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      padding: 13px 24px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 15px;
+      border: 1px solid rgba(255,255,255,0.18);
+      transition: background .2s;
+    }
+
+    .btn-secondary:hover { background: rgba(255,255,255,0.16); text-decoration: none; }
+
+    .hero-pills {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 36px;
+    }
+
+    .hero-pill {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+      color: rgba(255,255,255,0.7);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: 20px;
+    }
+
+    /* ── Section ─────────────────────────────────── */
+    .section {
+      padding: 72px 24px;
+    }
+
+    .section-alt { background: #fff; }
+
+    .section-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .section-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-size: clamp(26px, 4vw, 36px);
+      font-weight: 800;
+      letter-spacing: -0.8px;
+      color: var(--text);
+      margin-bottom: 14px;
+      line-height: 1.2;
+    }
+
+    .section-sub {
+      font-size: 16px;
+      color: var(--secondary);
+      max-width: 540px;
+      line-height: 1.7;
+      margin-bottom: 48px;
+    }
+
+    /* ── Who it's for ────────────────────────────── */
+    .who-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+    }
+
+    .who-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px 20px;
+      text-align: center;
+    }
+
+    .who-card .icon { font-size: 32px; margin-bottom: 10px; }
+    .who-card .label { font-size: 14px; font-weight: 600; color: var(--text); }
+    .who-card .desc  { font-size: 12px; color: var(--secondary); margin-top: 4px; }
+
+    /* ── Feature grid ────────────────────────────── */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 20px;
+    }
+
+    .feature-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 24px;
+      transition: box-shadow .2s, transform .2s;
+    }
+
+    .feature-card:hover {
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+    }
+
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 16px;
+    }
+
+    .icon-teal  { background: var(--teal-dim); }
+    .icon-gold  { background: rgba(200,116,0,0.1); }
+    .icon-blue  { background: rgba(0,122,255,0.1); }
+    .icon-green { background: rgba(52,199,89,0.1); }
+    .icon-red   { background: rgba(255,59,48,0.1); }
+    .icon-purple{ background: rgba(88,86,214,0.1); }
+
+    .feature-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      font-size: 14px;
+      color: var(--secondary);
+      line-height: 1.65;
+    }
+
+    .feature-list {
+      margin-top: 10px;
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .feature-list li {
+      font-size: 13px;
+      color: var(--secondary);
+      padding: 3px 0;
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .feature-list li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--teal);
+      font-weight: 700;
+    }
+
+    /* ── How it works ────────────────────────────── */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0;
+      counter-reset: step;
+    }
+
+    .step {
+      padding: 32px 28px;
+      position: relative;
+    }
+
+    .step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 1px;
+      height: 50%;
+      background: var(--border);
+    }
+
+    .step-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--teal);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+
+    .step h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .step p {
+      font-size: 13px;
+      color: var(--secondary);
+      line-height: 1.6;
+    }
+
+    /* ── Pricing table ───────────────────────────── */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .pricing-card {
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: 20px;
+      padding: 32px 28px;
+      position: relative;
+    }
+
+    .pricing-card.pro {
+      border-color: var(--teal);
+      background: linear-gradient(160deg, #f0fdfb 0%, #fff 60%);
+    }
+
+    .pricing-badge {
+      position: absolute;
+      top: -13px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--teal);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 20px;
+    }
+
+    .pricing-tier {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--secondary);
+      margin-bottom: 8px;
+    }
+
+    .pricing-card.pro .pricing-tier { color: var(--teal); }
+
+    .pricing-price {
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .pricing-period {
+      font-size: 13px;
+      color: var(--secondary);
+      margin-bottom: 24px;
+    }
+
+    .pricing-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text);
+      padding: 7px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .pricing-row .check { color: var(--teal); font-weight: 700; flex-shrink: 0; }
+    .pricing-row .cross { color: #d1d5db; font-weight: 700; flex-shrink: 0; }
+
+    .pricing-cta {
+      display: block;
+      text-align: center;
+      margin-top: 24px;
+      padding: 12px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 14px;
+      background: var(--border);
+      color: var(--secondary);
+    }
+
+    .pricing-card.pro .pricing-cta {
+      background: var(--teal);
+      color: #fff;
+    }
+
+    .pricing-card.pro .pricing-cta:hover { background: var(--teal-light); text-decoration: none; }
+
+    .pricing-note {
+      text-align: center;
+      font-size: 13px;
+      color: var(--secondary);
+      margin-top: 20px;
+    }
+
+    /* ── Comparison table ────────────────────────── */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--card);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .compare-table th, .compare-table td {
+      padding: 14px 20px;
+      text-align: left;
+      font-size: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .compare-table thead th {
+      background: var(--navy);
+      color: #fff;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .compare-table thead th:not(:first-child) { text-align: center; }
+    .compare-table td:not(:first-child) { text-align: center; font-size: 16px; }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .compare-table tbody tr:hover { background: var(--bg); }
+    .compare-table td:first-child { color: var(--text); }
+    .compare-table td.yes { color: var(--teal); }
+    .compare-table td.no  { color: #d1d5db; }
+    .compare-table td.partial { color: var(--gold); font-size: 12px; font-weight: 600; }
+
+    .compare-section td {
+      background: var(--bg);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--secondary);
+      padding: 10px 20px;
+    }
+
+    /* ── FAQ ─────────────────────────────────────── */
+    .faq-list { max-width: 680px; }
+
+    details {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+
+    summary {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      padding: 18px 20px;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+
+    summary::after {
+      content: '+';
+      font-size: 20px;
+      color: var(--teal);
+      font-weight: 300;
+      transition: transform .2s;
+    }
+
+    details[open] summary::after { transform: rotate(45deg); }
+
+    .faq-body {
+      padding: 0 20px 18px;
+      font-size: 14px;
+      color: var(--secondary);
+      line-height: 1.7;
+    }
+
+    .faq-body a { color: var(--teal); }
+
+    /* ── CTA banner ──────────────────────────────── */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--navy) 0%, #073028 100%);
+      padding: 64px 24px;
+      text-align: center;
+    }
+
+    .cta-banner h2 {
+      font-size: clamp(26px, 4vw, 36px);
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.8px;
+      margin-bottom: 14px;
+    }
+
+    .cta-banner p {
+      font-size: 16px;
+      color: rgba(255,255,255,0.55);
+      max-width: 460px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+
+    /* ── Footer ──────────────────────────────────── */
+    footer {
+      background: #111;
+      padding: 40px 24px;
+      text-align: center;
+    }
+
+    .footer-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .footer-logo {
+      font-size: 18px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .footer-sub {
+      font-size: 13px;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 20px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: rgba(255,255,255,0.45);
+    }
+
+    .footer-links a:hover { color: var(--teal); text-decoration: none; }
+
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(255,255,255,0.2);
+    }
+
+    /* ── Responsive ──────────────────────────────── */
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .steps { grid-template-columns: 1fr; }
+      .step:not(:last-child)::after { display: none; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .feature-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Nav ──────────────────────────────────────── -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="/">
+      <span class="logo-dot"><img src="stoqly-icon.png" alt="Stoqly" /></span>
+      Stoqly
+    </a>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#how-it-works">How it works</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="support.html">Support</a></li>
+      <li><a href="#download" class="nav-cta">Download Free</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── Hero ─────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-icon"><img src="stoqly-icon.png" alt="Stoqly app icon" /></div>
+    <div class="hero-eyebrow">iOS Inventory App</div>
+    <div style="font-size:clamp(38px,7vw,60px);font-weight:900;letter-spacing:-2px;color:#fff;margin-bottom:10px;">Stoqly</div>
+    <h1>Inventory that <span>actually makes sense</span></h1>
+    <p>Stoqly is a smart, lightweight inventory management app built for small businesses — shops, cafes, restaurants, warehouses, and anyone who tracks stock.</p>
+    <div class="hero-buttons">
+      <a href="#download" class="btn-primary">📲 Download on TestFlight</a>
+      <a href="#pricing" class="btn-secondary">View Pricing</a>
+    </div>
+    <div class="hero-pills">
+      <span class="hero-pill">🔍 Barcode Scanner</span>
+      <span class="hero-pill">☁️ Cloud Sync</span>
+      <span class="hero-pill">🤖 AI Assist</span>
+      <span class="hero-pill">👥 Team Access</span>
+      <span class="hero-pill">📊 Analytics</span>
+      <span class="hero-pill">🔔 Low-Stock Alerts</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── Who it's for ──────────────────────────────── -->
+<section class="section section-alt">
+  <div class="section-inner">
+    <div class="section-tag">Who it's for</div>
+    <h2 class="section-title">Built for real businesses</h2>
+    <p class="section-sub">Whether you're running a café, a boutique, a grocery, or a warehouse — if you count stock, Stoqly was made for you.</p>
+    <div class="who-grid">
+      <div class="who-card">
+        <div class="icon">☕</div>
+        <div class="label">Cafés & Restaurants</div>
+        <div class="desc">Track ingredients, consumables, and packaging</div>
+      </div>
+      <div class="who-card">
+        <div class="icon">🛍️</div>
+        <div class="label">Retail Shops</div>
+        <div class="desc">Manage SKUs, shelves, and reorder points</div>
+      </div>
+      <div class="who-card">
+        <div class="icon">🏭</div>
+        <div class="label">Warehouses</div>
+        <div class="desc">Multi-zone stock control with team access</div>
+      </div>
+      <div class="who-card">
+        <div class="icon">💅</div>
+        <div class="label">Salons & Studios</div>
+        <div class="desc">Track supplies and consumables between appointments</div>
+      </div>
+      <div class="who-card">
+        <div class="icon">🔧</div>
+        <div class="label">Repair & Service</div>
+        <div class="desc">Keep spare parts and tools accounted for</div>
+      </div>
+      <div class="who-card">
+        <div class="icon">📦</div>
+        <div class="label">Any SMB</div>
+        <div class="desc">If you track stock, Stoqly has you covered</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Features ──────────────────────────────────── -->
+<section class="section" id="features">
+  <div class="section-inner">
+    <div class="section-tag">Features</div>
+    <h2 class="section-title">Everything you need, nothing you don't</h2>
+    <p class="section-sub">Stoqly keeps inventory simple. No bloated menus, no confusing setups — just the tools that matter for day-to-day stock management.</p>
+
+    <div class="feature-grid">
+
+      <div class="feature-card">
+        <div class="feature-icon icon-teal">🏪</div>
+        <h3>Storage Areas</h3>
+        <p>Organise your inventory into named storage areas — shelves, fridges, storerooms, floor sections. Each area is independent and fully searchable.</p>
+        <ul class="feature-list">
+          <li>Up to 5 areas on the free plan</li>
+          <li>Unlimited areas on Pro</li>
+          <li>Custom names, icons, and colours</li>
+          <li>Instant search across all areas</li>
+        </ul>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon icon-blue">📋</div>
+        <h3>Inventory Items</h3>
+        <p>Add items with photos, barcodes, units of measure, categories, cost price, and reorder levels. Everything in one place, no spreadsheets needed.</p>
+        <ul class="feature-list">
+          <li>Unlimited items on all plans</li>
+          <li>Custom units of measure (kg, litres, pcs, boxes…)</li>
+          <li>Cost and value tracking</li>
+          <li>Low-stock threshold per item</li>
+          <li>Batch and expiry date tracking</li>
+        </ul>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon icon-gold">📷</div>
+        <h3>Barcode Scanner</h3>
+        <p>Scan any product barcode with your iPhone camera. Supported on all common symbologies — EAN, UPC, QR, Code128, ITF14, and more.</p>
+        <ul class="feature-list">
+          <li>No external hardware needed</li>
+          <li>Manual entry fallback</li>
+          <li>Instant item lookup or creation</li>
+          <li>Scan to count, scan to find</li>
+        </ul>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon icon-teal">📊</div>
+        <h3>Dashboard & Analytics</h3>
+        <p>See the health of your entire inventory at a glance — total value, low-stock items, recent activity, and trend insights.</p>
+        <ul class="feature-list">
+          <li>Total inventory value</li>
+          <li>Low-stock and out-of-stock counts</li>
+          <li>Category breakdown</li>
+          <li>Activity feed with timestamps</li>
+          <li>Advanced charts on Pro</li>
+        </ul>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon icon-green">🔔</div>
+        <h3>Low-Stock Alerts</h3>
+        <p>Set a minimum quantity for any item and Stoqly will send a push notification the moment stock falls below it — so you never run out unexpectedly.</p>
+        <ul class="feature-list">
+          <li>Per-item threshold settings</li>
+          <li>Push notifications via system</li>
+          <li>Alert summary on dashboard</li>
+          <li>Works in the background</li>
+        </ul>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon icon-blue">☁️</div>
+        <h3>Cloud Sync (Pro)</h3>
+        <p>All your data syncs in real-time to the cloud via Firestore. Switch between devices instantly, and your inventory is always up to date — even offline.</p>
+        <ul class="feature-list">
+          <li>Real-time sync across devices</li>
+          <li>Works offline, syncs on reconnect</li>
+          <li>Automatic backup</li>
+          <li>Secure — only your data, no sharing</li>
+        </ul>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon icon-purple">👥</div>
+        <h3>Team Collaboration (Pro)</h3>
+        <p>Invite staff members to your workspace. Control who can view, edit, or manage inventory without sharing your account credentials.</p>
+        <ul class="feature-list">
+          <li>Invite members via email</li>
+          <li>Role-based access (Owner / Member)</li>
+          <li>Members share the same live data</li>
+          <li>Activity log shows who did what</li>
+        </ul>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon icon-gold">📥</div>
+        <h3>Import & Export</h3>
+        <p>Bring in existing data from a CSV or Excel file in minutes. Export your full inventory as a clean CSV or a branded PDF report whenever you need it.</p>
+        <ul class="feature-list">
+          <li>Bulk import from CSV / XLSX</li>
+          <li>Smart column mapping</li>
+          <li>CSV export (free)</li>
+          <li>PDF report export (Pro)</li>
+        </ul>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon icon-teal">🤖</div>
+        <h3>AI Assist</h3>
+        <p>Add items by voice or photo. Describe what you want to add and Stoqly fills in the details — great for onboarding large catalogues quickly.</p>
+        <ul class="feature-list">
+          <li>Voice-to-item creation</li>
+          <li>Photo recognition</li>
+          <li>AI reorder suggestions</li>
+          <li>Smart search across your inventory</li>
+        </ul>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon icon-green">🔢</div>
+        <h3>Inventory Counting</h3>
+        <p>Run stock counts directly in the app. Scan or tap items to record actual quantities, and let Stoqly flag any discrepancies instantly.</p>
+        <ul class="feature-list">
+          <li>Count with or without scanner</li>
+          <li>Count history per item</li>
+          <li>Timestamps for every count</li>
+          <li>Adjustments logged to activity feed</li>
+        </ul>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon icon-blue">🌍</div>
+        <h3>Multi-Currency Support</h3>
+        <p>Set your preferred currency and all cost, value, and reporting figures display accordingly — out of the box, no configuration needed.</p>
+        <ul class="feature-list">
+          <li>Supports all major currencies</li>
+          <li>Consistent formatting throughout app</li>
+          <li>Change currency in Settings anytime</li>
+        </ul>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon icon-red">🔒</div>
+        <h3>Privacy & Security</h3>
+        <p>Your data belongs to you. Stoqly does not share inventory data with third parties, and all cloud data is secured under your account credentials.</p>
+        <ul class="feature-list">
+          <li>Secure Firebase authentication</li>
+          <li>Data isolated per account</li>
+          <li>Optional ad tracking opt-out</li>
+          <li>Delete your account and data anytime</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── How it works ──────────────────────────────── -->
+<section class="section section-alt" id="how-it-works">
+  <div class="section-inner">
+    <div class="section-tag">How it works</div>
+    <h2 class="section-title">Up and running in minutes</h2>
+    <p class="section-sub">No training needed. Most users have their first storage area and items set up within 5 minutes of opening the app.</p>
+
+    <div class="steps" style="background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Create an account</h3>
+        <p>Sign up with email or Google. Your data is linked to your account and syncs automatically across your devices on Pro.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Add storage areas</h3>
+        <p>Create areas that match your real-world layout — Main Shelf, Cold Room, Back Store. Give each a name and colour.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Add your items</h3>
+        <p>Add items manually, scan barcodes, import from CSV, or let AI create them from a voice description or photo.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h3>Track &amp; manage</h3>
+        <p>Update counts, get low-stock alerts, run reports, and invite your team. Stoqly keeps everything in sync automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Pricing ───────────────────────────────────── -->
+<section class="section" id="pricing">
+  <div class="section-inner">
+    <div class="section-tag">Pricing</div>
+    <h2 class="section-title">Simple, honest pricing</h2>
+    <p class="section-sub">Start free for as long as you like. Upgrade to Pro when you need unlimited storages, cloud sync, and team features.</p>
+
+    <div class="pricing-grid">
+
+      <div class="pricing-card">
+        <div class="pricing-tier">Free</div>
+        <div class="pricing-price">$0</div>
+        <div class="pricing-period">Forever free</div>
+        <div class="pricing-row"><span class="check">✓</span> Up to 5 storage areas</div>
+        <div class="pricing-row"><span class="check">✓</span> Unlimited items</div>
+        <div class="pricing-row"><span class="check">✓</span> Barcode scanner</div>
+        <div class="pricing-row"><span class="check">✓</span> Basic dashboard</div>
+        <div class="pricing-row"><span class="check">✓</span> CSV export</div>
+        <div class="pricing-row"><span class="check">✓</span> Low-stock alerts</div>
+        <div class="pricing-row"><span class="cross">✗</span> Cloud sync</div>
+        <div class="pricing-row"><span class="cross">✗</span> Team collaboration</div>
+        <div class="pricing-row"><span class="cross">✗</span> PDF reports</div>
+        <div class="pricing-row"><span class="cross">✗</span> Advanced analytics</div>
+        <a href="#download" class="pricing-cta">Get Started Free</a>
+      </div>
+
+      <div class="pricing-card pro">
+        <div class="pricing-badge">Most Popular</div>
+        <div class="pricing-tier">Pro</div>
+        <div class="pricing-price">$4.99</div>
+        <div class="pricing-period">per month · or $39.99/year (save 33%)</div>
+        <div class="pricing-row"><span class="check">✓</span> Unlimited storage areas</div>
+        <div class="pricing-row"><span class="check">✓</span> Unlimited items</div>
+        <div class="pricing-row"><span class="check">✓</span> Barcode scanner</div>
+        <div class="pricing-row"><span class="check">✓</span> Advanced analytics</div>
+        <div class="pricing-row"><span class="check">✓</span> CSV + PDF export</div>
+        <div class="pricing-row"><span class="check">✓</span> Cloud sync &amp; backup</div>
+        <div class="pricing-row"><span class="check">✓</span> Team collaboration</div>
+        <div class="pricing-row"><span class="check">✓</span> AI reorder suggestions</div>
+        <div class="pricing-row"><span class="check">✓</span> Remove ads</div>
+        <a href="#download" class="pricing-cta">Try Pro Free</a>
+      </div>
+
+    </div>
+
+    <p class="pricing-note">All subscriptions managed via Apple. Cancel anytime from iPhone Settings → Apple ID → Subscriptions.</p>
+
+    <!-- Full comparison table -->
+    <div style="margin-top:48px;">
+      <h3 style="font-size:18px;font-weight:700;margin-bottom:20px;">Full feature comparison</h3>
+      <div style="overflow-x:auto;">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th style="width:55%">Feature</th>
+              <th>Free</th>
+              <th style="color:var(--teal-light);">Pro</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="compare-section"><td colspan="3">Storage & Items</td></tr>
+            <tr><td>Storage areas</td><td class="partial">Up to 5</td><td class="yes">✓ Unlimited</td></tr>
+            <tr><td>Inventory items</td><td class="yes">✓ Unlimited</td><td class="yes">✓ Unlimited</td></tr>
+            <tr><td>Units of measure</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+            <tr><td>Batch & expiry tracking</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+            <tr><td>Custom categories</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+
+            <tr class="compare-section"><td colspan="3">Scanning & Import</td></tr>
+            <tr><td>Barcode scanner</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+            <tr><td>CSV bulk import</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+            <tr><td>Excel (.xlsx) import</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+            <tr><td>AI voice & photo add</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+
+            <tr class="compare-section"><td colspan="3">Export & Reports</td></tr>
+            <tr><td>CSV export</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+            <tr><td>PDF report export</td><td class="no">✗</td><td class="yes">✓</td></tr>
+            <tr><td>Advanced analytics & charts</td><td class="no">✗</td><td class="yes">✓</td></tr>
+
+            <tr class="compare-section"><td colspan="3">Sync & Collaboration</td></tr>
+            <tr><td>Cloud sync & backup</td><td class="no">✗</td><td class="yes">✓ Real-time</td></tr>
+            <tr><td>Multi-device access</td><td class="no">✗</td><td class="yes">✓</td></tr>
+            <tr><td>Team member invites</td><td class="no">✗</td><td class="yes">✓</td></tr>
+            <tr><td>Role-based access</td><td class="no">✗</td><td class="yes">✓</td></tr>
+            <tr><td>Activity log</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+
+            <tr class="compare-section"><td colspan="3">Alerts & AI</td></tr>
+            <tr><td>Low-stock push notifications</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+            <tr><td>AI reorder suggestions</td><td class="no">✗</td><td class="yes">✓</td></tr>
+
+            <tr class="compare-section"><td colspan="3">Experience</td></tr>
+            <tr><td>Ad-free</td><td class="no">✗</td><td class="yes">✓</td></tr>
+            <tr><td>Multi-currency</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ───────────────────────────────────────── -->
+<section class="section section-alt" id="faq">
+  <div class="section-inner">
+    <div class="section-tag">FAQ</div>
+    <h2 class="section-title">Common questions</h2>
+    <p class="section-sub" style="margin-bottom:32px;">Can't find your answer? <a href="support.html">Contact support →</a></p>
+
+    <div class="faq-list">
+
+      <details>
+        <summary>Is Stoqly really free?</summary>
+        <div class="faq-body">Yes — the free plan is genuinely free, with no time limit and no credit card required. You can manage up to 5 storage areas and unlimited items entirely for free. Ads are shown to keep the free tier sustainable. Upgrade to Pro to remove ads and unlock cloud sync, team access, and advanced reports.</div>
+      </details>
+
+      <details>
+        <summary>What happens to my data if I cancel Pro?</summary>
+        <div class="faq-body">Your data stays intact. You'll lose access to Pro-only features (cloud sync, team access, PDF export) but all your items and storages remain accessible on the free plan. If you have more than 5 storage areas, you can still view them — you just won't be able to add new ones until you're back below the limit.</div>
+      </details>
+
+      <details>
+        <summary>Does it work offline?</summary>
+        <div class="faq-body">Yes. All your inventory data is stored locally on your device, so Stoqly works fully without a network connection. On Pro, any changes you make offline are queued and automatically synced to the cloud the next time your device is online.</div>
+      </details>
+
+      <details>
+        <summary>How do I invite team members?</summary>
+        <div class="faq-body">On the Pro plan, go to the Storages tab → tap the team icon in the top right → Invite Member. Enter their email address, choose their role (Member or Owner), and they'll receive an invite. Once accepted, they'll see and update the same live inventory as you.</div>
+      </details>
+
+      <details>
+        <summary>Can I import my existing stock list?</summary>
+        <div class="faq-body">Yes. Stoqly supports bulk import from CSV and Excel (.xlsx) files. Go to any storage area → Import → choose your file → map the columns. The importer is flexible — it can handle different column orders and will skip duplicates automatically.</div>
+      </details>
+
+      <details>
+        <summary>What barcode formats are supported?</summary>
+        <div class="faq-body">Stoqly's scanner supports EAN-8, EAN-13, UPC-E, Code 39, Code 93, Code 128, ITF-14, Data Matrix, Aztec, PDF417, and QR codes. If scanning isn't available on your device, you can always enter barcodes manually.</div>
+      </details>
+
+      <details>
+        <summary>How is my data secured?</summary>
+        <div class="faq-body">Stoqly uses Firebase Authentication and Firestore with strict per-user security rules — your data is completely isolated from other users. We never share your inventory data with third parties. You can delete your account and all associated data at any time from Settings → Profile → Delete Account.</div>
+      </details>
+
+      <details>
+        <summary>Is there a web or Android version?</summary>
+        <div class="faq-body">Currently Stoqly is iOS only (iPhone). A web dashboard and Android version are on the roadmap. If you'd like to be notified when they launch, <a href="support.html">drop us a message</a>.</div>
+      </details>
+
+      <details>
+        <summary>How do subscriptions work?</summary>
+        <div class="faq-body">Pro is a monthly ($4.99/month) or annual ($39.99/year) subscription managed entirely by Apple. You can cancel anytime through iPhone Settings → Apple ID → Subscriptions — no need to contact us. You keep access until the end of the billing period.</div>
+      </details>
+
+      <details>
+        <summary>I have a problem or suggestion — how do I reach you?</summary>
+        <div class="faq-body">Use the <a href="support.html">Support page</a> or email us directly. We're a small indie team and aim to respond within 24–48 hours.</div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Download CTA ──────────────────────────────── -->
+<section class="cta-banner" id="download">
+  <div style="position:relative;max-width:520px;margin:0 auto;">
+    <img src="stoqly-icon.png" alt="Stoqly" style="width:64px;height:64px;border-radius:16px;margin-bottom:16px;box-shadow:0 8px 24px rgba(0,0,0,0.35);" />
+    <h2>Ready to take control of your stock?</h2>
+    <p>Download Stoqly free on iPhone. No credit card, no setup fee — just smarter inventory from day one.</p>
+    <div class="hero-buttons">
+      <a href="https://testflight.apple.com" class="btn-primary">📲 Download on TestFlight</a>
+      <a href="support.html" class="btn-secondary">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ────────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo" style="display:flex;align-items:center;gap:8px;justify-content:center;">
+      <img src="stoqly-icon.png" alt="" style="width:24px;height:24px;border-radius:6px;" />
+      Stoqly
+    </div>
+    <div class="footer-sub">by <a href="/" style="color:rgba(255,255,255,0.35);">Vishuddhi</a> · Smart inventory for small businesses</div>
+    <div class="footer-links">
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a href="support.html">Support</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="/">vishuddhi.in</a>
+    </div>
+    <div class="footer-copy">© 2025 Vishuddhi. All rights reserved. Stoqly is an independent iOS app.</div>
+  </div>
+</footer>
+
+</body>
+</html>
