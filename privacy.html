@@ -146,8 +146,15 @@
 
   <p><strong>Usage and diagnostic data</strong></p>
   <ul>
-    <li>App events and feature usage (via Firebase Analytics) to help us understand how the App is used</li>
+    <li>App events and feature usage (via Amplitude and Firebase Analytics) to help us understand how the App is used and improve the experience</li>
     <li>Crash reports and diagnostic logs (via Firebase Crashlytics) to identify and fix bugs</li>
+  </ul>
+
+  <p><strong>Camera and microphone</strong></p>
+  <ul>
+    <li>Camera access is used for scanning barcodes and optionally capturing item photos. Barcode scans are processed on-device and never transmitted. Item photos are uploaded to Firebase Storage only if you explicitly attach one to an item</li>
+    <li>Camera is also used in Smart Count Photo mode to photograph products or inventory sheets; images are sent to our AI provider for counting and then discarded</li>
+    <li>Microphone access is used exclusively in Smart Count Voice mode to transcribe your spoken inventory count. Audio is processed by our AI provider and is not stored after transcription</li>
   </ul>
 
   <p><strong>Advertising identifiers</strong> <span class="badge">Free tier only</span></p>
@@ -156,10 +163,6 @@
     <li>Pro subscribers and users who purchase the "Remove Ads" subscription do not see ads and their advertising identifier is not used for ad targeting</li>
   </ul>
 
-  <p><strong>Camera</strong></p>
-  <ul>
-    <li>Camera access is used for scanning barcodes and optionally capturing item photos. Barcode scans are processed on-device and never transmitted. Item photos are uploaded to Firebase Storage only if you explicitly attach one to an item</li>
-  </ul>
 
   <!-- 3 -->
   <h2>3. How We Use Your Information</h2>
@@ -169,7 +172,7 @@
     <li>To restore your data when you reinstall or sign in on a new device</li>
     <li>To deliver in-app advertisements (free tier) through Google AdMob</li>
     <li>To monitor App performance and diagnose crashes via Firebase Crashlytics</li>
-    <li>To understand feature usage and improve the App via Firebase Analytics</li>
+    <li>To understand feature usage and improve the App via Firebase Analytics and Amplitude</li>
     <li>To process subscription payments (handled entirely by Apple's App Store)</li>
   </ul>
 
@@ -180,6 +183,10 @@
     <li>
       <strong>Firebase (Google LLC)</strong> — Authentication, Firestore cloud storage, Analytics, and Crashlytics.<br>
       <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">firebase.google.com/support/privacy</a>
+    </li>
+    <li>
+      <strong>Amplitude, Inc.</strong> — Product analytics to track feature usage and improve the App. Amplitude collects anonymised event data and device metadata. No inventory content is transmitted.<br>
+      <a href="https://amplitude.com/privacy" target="_blank" rel="noopener">amplitude.com/privacy</a>
     </li>
     <li>
       <strong>Google AdMob (Google LLC)</strong> — In-app advertising for free-tier users.<br>
